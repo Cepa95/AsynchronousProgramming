@@ -1,0 +1,36 @@
+html, body {
+  text-align: center;
+  margin: auto;
+  font-family: sans-serif;
+}
+
+#igra-tablica {
+  margin: auto;
+}
+
+#igra-tablica td {
+  border: 1px solid #333;
+  border-radius: 2px;
+  padding: 25px;
+}
+
+#igra-tablica td:hover {
+  cursor: pointer;
+}
+
+.info {
+  font-style: italic;
+  color: #333;
+}
+
+.crvena {
+  background-color: rgb(194, 79, 79);
+}
+
+.plava {
+  background-color: rgb(72, 216, 227)
+}
+
+.plava:hover, .crvena:hover {
+  cursor: auto;
+}
