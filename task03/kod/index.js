@@ -27,8 +27,11 @@ async function fileActions() {
     for (const file of files) {
       const filePath = join(dirPath, file);
       const content = await readFile(filePath, "utf-8"); //const contents = await readFile(filePath, { encoding: 'utf8' });
-      const words = content.split(/\s+/).filter(Boolean); // regex za razmak, tab, novi red, ... i filter za prazne stringove(false, null, 0, "", undefined, and NaN)
+      // \p{L} - Unicode letter, \s - whitespace, nije potreban sada filter ali neka se nadje
+      const words = content.replace(/[^\p{L}\s]/gu, "").split(/\s+/).filter(Boolean); // regex za razmak, tab, novi red, ... i filter za prazne stringove(false, null, 0, "", undefined, and NaN)
+      console.log(words);
       const wordCount = words.length;
+
       const wordLengthCount = {}; //treci zadatak
 
       for (const word of words) {
