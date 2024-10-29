@@ -37,7 +37,7 @@ async function fileActions() {
       for (const word of words) {
         //treci zadatak
         const length = word.length;
-        if (!wordLengthCount[length]) wordLengthCount[length] = 1;
+        if (!wordLengthCount[length]) wordLengthCount[length] = 0;
         wordLengthCount[length]++;
         // wordLengthCount[length] = wordLengthCount[length]
         //   ? wordLengthCount[length] + 1
