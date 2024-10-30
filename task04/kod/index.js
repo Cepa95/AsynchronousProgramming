@@ -2,7 +2,6 @@ const readline = require("readline");
 const fs = require("fs");
 const {
   Igra: IgraPotapanja,
-  DULJINA_STRANICE_PLOCE,
   BaseError,
 } = require("./igra");
 

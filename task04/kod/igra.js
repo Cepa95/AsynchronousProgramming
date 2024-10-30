@@ -13,7 +13,10 @@ class BaseError extends Error {
     const logMessage = `${new Date().toUTCString()} ${this.status} ${
       this.name
     } ${this.stack.replace(/\n/g, " ")}`;
-    fs.appendFileSync("log.txt", logMessage + "\n");
+    fs.appendFile("log.txt", logMessage + "\n", (err) => {
+      if (err) throw new BaseError(500, "Error while writing to log file.");
+      console.log('The "logMessage" was appended to file!');
+    });
   }
 }
 
@@ -132,6 +135,5 @@ const Igra = function () {
 
 module.exports = {
   Igra,
-  DULJINA_STRANICE_PLOCE,
   BaseError,
 };
