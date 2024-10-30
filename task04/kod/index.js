@@ -49,7 +49,7 @@ function inputLoop(igraObj) {
     output: process.stdout,
   });
 
-  rl.question(questionTekst, (input) => {
+  rl.question(questionTekst, async (input) => {
     rl.close();
 
     try {
@@ -81,7 +81,7 @@ function inputLoop(igraObj) {
       }
     } catch (err) {
       if (err instanceof BaseError) {
-        err.logError();
+        await err.logError().catch(console.error);
         console.error(err.message);
       } else {
         console.error("Nepoznata greška:", err);

@@ -1,4 +1,4 @@
-const fs = require("fs");
+const fs = require("fs").promises;
 
 class BaseError extends Error {
   constructor(status, message) {
@@ -8,15 +8,17 @@ class BaseError extends Error {
     Error.captureStackTrace(this);
   }
 
-  logError() {
+  async logError() {
     console.log(this.name);
     const logMessage = `${new Date().toUTCString()} ${this.status} ${
       this.name
     } ${this.stack.replace(/\n/g, " ")}`;
-    fs.appendFile("log.txt", logMessage + "\n", (err) => {
-      if (err) throw new BaseError(500, "Error while writing to log file.");
+    try {
+      await fs.appendFile("log.txt", logMessage + "\n");
       console.log('The "logMessage" was appended to file!');
-    });
+    } catch (err) {
+      throw new BaseError(500, "Error while writing to log file.");
+    }
   }
 }
 
