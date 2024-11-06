@@ -1,4 +1,5 @@
 const fs = require("fs").promises;
+const { createReadStream, createWriteStream } = require("fs");
 const path = require("path");
 const sharp = require("sharp");
 const argv = require("yargs").argv;
@@ -35,7 +36,12 @@ const resizeImage = async (file, size) => {
   const outputPath = path.join(outputDir, outputFileName);
 
   try {
-    await sharp(file).resize(width, height).toFile(outputPath);
+    const readStream = createReadStream(file);
+    const resizeSharpStream = sharp().resize(width, height);
+    const writeStream = createWriteStream(outputPath);
+
+    readStream.pipe(resizeSharpStream).pipe(writeStream);
+
 
     const stats = (await fs.stat(outputPath)).size;
 
