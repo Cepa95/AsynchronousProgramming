@@ -15,6 +15,7 @@ const INTERVAL_TIME = 1000
 let activeSocketIds = []
 const activeSockets = {}
 const activePlayers = {}
+// let totalPoints = 0;
 
 const novaIgra = new Game()
 
@@ -33,7 +34,8 @@ function sendGameStatusMessage (socketId, points) {
 function sendMessages () {
   console.log('Game tick...')
   const points = novaIgra.nextGameTick()
-  activeSocketIds.map(socketId => sendGameStatusMessage(socketId, points))
+  // totalPoints += points;
+  activeSocketIds.map(socketId => sendGameStatusMessage(socketId, points))//totalPoints))
 }
 setInterval(sendMessages, INTERVAL_TIME)
 

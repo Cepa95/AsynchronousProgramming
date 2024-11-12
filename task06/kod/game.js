@@ -115,6 +115,10 @@ function Game () {
     const maxHeight = 20
     const maxWidth = 20
 
+    // if (playerPreviousMove.x !== undefined && playerPreviousMove.y !== undefined) {
+    //   gameState[playerPreviousMove.x][playerPreviousMove.y] = null;
+    // }
+
     const possibleMoves = []
     for (let x = 0; x < maxWidth; x++) {
       for (let y = 0; y < maxHeight; y++) {
