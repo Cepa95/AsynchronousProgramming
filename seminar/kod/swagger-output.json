@@ -1,0 +1,799 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Seminar",
+    "description": "Asynchronous Programming",
+    "version": "1.0.0"
+  },
+  "host": "localhost:4000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Enter your bearer token in the format **Bearer &lt;token&gt;**"
+    }
+  },
+  "security": [
+    {
+      "Bearer": []
+    }
+  ],
+  "paths": {
+    "/register": {
+      "post": {
+        "summary": "Register a new user",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "user"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "user@example.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "123"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User registered successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 7
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "user"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "user@gmail.com"
+                    },
+                    "password": {
+                      "type": "string",
+                      "example": "$2b$10$RQ0Nta72eEnmx5WV13kRcul7VBCNY2BjIBVAhU8xYIJvgBEV.zuXe"
+                    },
+                    "role": {
+                      "type": "string",
+                      "example": "student"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2024-12-19 11:50:46"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "summary": "Login a user",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "user@example.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "123"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful login",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 7
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "user"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "user@example.com"
+                        },
+                        "password": {
+                          "type": "string",
+                          "example": "$2b$10$RQ0Nta72eEnmx5WV13kRcul7VBCNY2BjIBVAhU8xYIJvgBEV.zuXe"
+                        },
+                        "role": {
+                          "type": "string",
+                          "example": "student"
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-12-19 11:50:46"
+                        }
+                      }
+                    },
+                    "token": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZW1haWwiOiJqb3NpcEBleGFtcGxlLmNvbSIsInJvbGUiOiJzdHVkZW50IiwiaWF0IjoxNzM0NjA5MDgzLCJleHAiOjE3Mzg5MjkwODN9.dTi368GWju6wQ7KAkurT8x0NI_mI1huSh_DKxRT5f6w"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid email or password",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Invalid email or password"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "summary": "Retrieve a list of users => authorization&admin",
+        "responses": {
+          "200": {
+            "description": "A list of users",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "user"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "user@gmail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "$2b$10$G7Fm1IpCxNE5SAnVQpXrN.7/1C9jEW/xQ0bFYYkr0VSyay.9FL/kG"
+                  },
+                  "role": {
+                    "type": "string",
+                    "example": "student"
+                  },
+                  "created_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2024-12-18 22:47:10"
+                  }
+                }
+              },
+              "example": [
+                {
+                  "id": 1,
+                  "name": "user",
+                  "email": "user@example.com",
+                  "password": "$2b$10$G7Fm1IpCxNE5SAnVQpXrN.7/1C9jEW/xQ0bFYYkr0VSyay.9FL/kG",
+                  "role": "student",
+                  "created_at": "2024-12-18 22:47:10"
+                },
+                {
+                  "id": 2,
+                  "name": "user2",
+                  "email": "user2@example.com",
+                  "password": "$2b$10$G7Fm1IpCxNE5SAnVQpXrN.7/1C9jEW/xQ0bFYYkr0VSyay.9FL/kG",
+                  "role": "student",
+                  "created_at": "2024-12-18 22:47:10"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new user => authorization&admin",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "New User",
+                  "description": "Name of the user"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "newuser@example.com",
+                  "description": "Email of the user"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "password123",
+                  "description": "Password of the user"
+                },
+                "role": {
+                  "type": "string",
+                  "enum": [
+                    "student",
+                    "admin"
+                  ],
+                  "example": "student",
+                  "description": "Role of the user"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User created successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "example": 1
+                },
+                "name": {
+                  "type": "string",
+                  "example": "New User Name"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "newuser@example.com"
+                },
+                "role": {
+                  "type": "string",
+                  "example": "student"
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "example": "2024-12-18T22:47:10.000Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "delete": {
+        "summary": "Delete a user => authorization&admin",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "example": 1
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "user deleted successfully"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update yourself => authorization",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "example": 1,
+            "description": "ID of the user to update"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Updated User Name",
+                  "description": "Name of the user"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "updateduser@example.com",
+                  "description": "Email of the user"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User updated successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "User updated successfully"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden: You can only update your own data"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/subjects": {
+      "get": {
+        "summary": "Retrieve a list of subjects",
+        "responses": {
+          "200": {
+            "description": "A list of subjects",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "Asinkrono web programiranje"
+                  },
+                  "ects": {
+                    "type": "integer",
+                    "example": 6
+                  },
+                  "created_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2024-12-18 22:47:09"
+                  }
+                }
+              },
+              "example": [
+                {
+                  "id": 1,
+                  "name": "Asinkrono web programiranje",
+                  "ects": 6,
+                  "created_at": "2024-12-18 22:47:09"
+                },
+                {
+                  "id": 2,
+                  "name": "Napredno web programiranje",
+                  "ects": 6,
+                  "created_at": "2024-12-18 22:47:09"
+                },
+                {
+                  "id": 3,
+                  "name": "Sustavi za skladistenje podataka",
+                  "ects": 6,
+                  "created_at": "2024-12-18 22:47:09"
+                },
+                {
+                  "id": 4,
+                  "name": "Graf algoritmi",
+                  "ects": 6,
+                  "created_at": "2024-12-18 22:47:09"
+                },
+                {
+                  "id": 5,
+                  "name": "Napredno prospajanje u racunalnim mrezama",
+                  "ects": 4,
+                  "created_at": "2024-12-18 22:47:09"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new subject => authorization&admin",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "New Subject",
+                  "description": "Name of the subject"
+                },
+                "ects": {
+                  "type": "integer",
+                  "example": 6,
+                  "description": "ECTS points of the subject"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Subject created successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Subject created successfully"
+                },
+                "subject": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "New Subject"
+                    },
+                    "ects": {
+                      "type": "integer",
+                      "example": 6
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2024-12-18T22:47:09.000Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/subjects/{id}": {
+      "delete": {
+        "summary": "Delete a subject => authorization&admin",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "example": 1
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Subject deleted successfully"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a subject => authorization&admin",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "example": 1,
+            "description": "ID of the subject to update"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "update example",
+                  "description": "Name of the subject"
+                },
+                "ects": {
+                  "type": "integer",
+                  "example": 6,
+                  "description": "ECTS points of the subject"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Subject updated successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Subject updated successfully"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Subject not found"
+          }
+        }
+      }
+    },
+    "/subjects/{id}/users": {
+      "get": {
+        "summary": "Get all users by subject id => authorization&admin",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "example": 1,
+            "description": "ID of the subject"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of users",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "User Name"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "user@example.com"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/users/{id}/subjects": {
+      "get": {
+        "summary": "Get your subjects => authorization",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "example": 1,
+            "description": "ID of the user"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of subjects",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "Subject Name"
+                  },
+                  "ects": {
+                    "type": "integer",
+                    "example": 6
+                  },
+                  "created_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2024-12-18T22:47:10.000Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/subjects/{id}/add": {
+      "post": {
+        "summary": "Add yourself to subject => authorization",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "example": 1,
+            "description": "ID of the subject"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User added to subject successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "User added to subject successfully"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input or user already added to subject"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/subjects/{id}/remove": {
+      "delete": {
+        "summary": "Remove yourself from subject => authorization",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "example": 1,
+            "description": "ID of the subject"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User removed from subject successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "User removed from subject successfully"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input or user not added to subject"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    }
+  }
+}
