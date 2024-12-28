@@ -38,8 +38,8 @@ router.post(
       ctx.body = { user, token };
     } catch (err) {
       ctx.status = 401;
-      //   ctx.body = { error: err.message || "Invalid email or password" };
-      ctx.body = { error: "Invalid email or password" };
+      ctx.body = { error: err.message || "Invalid email or password" };
+      // ctx.body = { error: 'Invalid email or password' };
     }
   }
 );

@@ -26,7 +26,7 @@ async function registerUser(body) {
       password: await hashPassword(body.password),
     })
   )?.[0];
-  return getById(Number(createdUserId));
+  return await getById(Number(createdUserId));
 }
 
 //50 dana cisto za potrebe seminara, da mogu stalno jedan token u postmanu ili swaggeru

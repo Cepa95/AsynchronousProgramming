@@ -66,6 +66,7 @@ router.post(
     try {
       const user = await usersRepo.createUser(ctx.request.body);
       ctx.body = user;
+      ctx.status = 201;
     } catch (err) {
       ctx.status = 400;
       ctx.body = { error: err.message };
