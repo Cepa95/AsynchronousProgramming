@@ -52,7 +52,7 @@ describe("Author routes", function () {
     });
   });
 
-  describe("POST /authors", async function () {
+  describe("POST /authors", function () {
     it("should create a new author", async function () {
       const newName = "newAuthor";
       const resp = await global.api
@@ -79,6 +79,7 @@ describe("Author routes", function () {
     });
 
     it("should delete an author by id", async function () {
+      
       await global.api
         .delete(`/authors/${createdAuthor.id}`)
         .set("Authorization", `Bearer ${token}`)
@@ -88,8 +89,7 @@ describe("Author routes", function () {
         .get(`/authors/${createdAuthor.id}`)
         .set("Authorization", `Bearer ${token}`)
         .expect(404);
-
-      expect(resp.body.error).to.be.equal("Author not found");
+      expect(resp.body.message).to.be.equal("Author not found");
     });
   });
 

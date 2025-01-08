@@ -87,7 +87,7 @@ describe("Song routes", function () {
         .set("Authorization", `Bearer ${token}`)
         .expect(404);
 
-      expect(resp.body.error).to.be.equal("Song not found");
+      expect(resp.body.message).to.be.equal("Song not found");
     });
   });
 

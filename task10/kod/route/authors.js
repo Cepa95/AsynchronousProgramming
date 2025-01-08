@@ -23,7 +23,7 @@ router.get("/authors", async (ctx) => {
   const authors = await authorsRepo.getAll();
   ctx.body = authors;
 });
- 
+
 router.get(
   "/authors/:authorId",
   jwtCheck,
@@ -43,24 +43,9 @@ router.get(
     if (author) {
       ctx.body = author;
     } else {
-      ctx.status = 404;
-      ctx.body = { error: "Author not found" };
-    }
-  }
-);
-
-router.get(
-  "/authors/:authorId",
-  validationMiddleware.params({
-    authorId: Joi.number().integer().required(),
-  }),
-  async (ctx) => {
-    const author = await authorsRepo.getById(ctx.params.authorId);
-    if (author) {
-      ctx.body = author;
-    } else {
-      ctx.status = 404;
-      ctx.body = { error: "Author not found" };
+      const err = new Error("Author not found");
+      err.status = 404;
+      throw err;
     }
   }
 );
@@ -76,8 +61,9 @@ router.delete(
     if (result) {
       ctx.status = 204;
     } else {
-      ctx.status = 404;
-      ctx.body = { error: "Author not found" };
+      const err = new Error("Author not found");
+      err.status = 404;
+      throw err;
     }
   }
 );
@@ -107,8 +93,9 @@ router.put(
     if (author.length) {
       ctx.body = author[0];
     } else {
-      ctx.status = 404;
-      ctx.body = { error: "Author not found" };
+      const err = new Error("Author not found");
+      err.status = 404;
+      throw err;
     }
   }
 );

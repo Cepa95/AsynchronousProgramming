@@ -43,8 +43,9 @@ router.get(
     if (song) {
       ctx.body = song;
     } else {
-      ctx.status = 404;
-      ctx.body = { error: "Song not found" };
+      const err = new Error("Song not found");
+      err.status = 404;
+      throw err;
     }
   }
 );
@@ -60,8 +61,9 @@ router.delete(
     if (result) {
       ctx.status = 204;
     } else {
-      ctx.status = 404;
-      ctx.body = { error: "Song not found" };
+      const err = new Error("Song not found");
+      err.status = 404;
+      throw err;
     }
   }
 );
@@ -88,8 +90,9 @@ router.put(
     if (song.length) {
       ctx.body = song[0];
     } else {
-      ctx.status = 404;
-      ctx.body = { error: "Song not found" };
+      const err = new Error("Song not found");
+      err.status = 404;
+      throw err;
     }
   }
 );

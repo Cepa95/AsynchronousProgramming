@@ -11,8 +11,10 @@ async function lockingMiddleware(ctx, next) {
     if (lock.user_id === user_id) {
       return next();
     } else {
-      ctx.status = 403;
-      ctx.body = { error: "Resource locked!" };
+      const error = new Error("Resource locked!");
+      error.status = 403;
+      throw error;
+      
     }
   } else {
     return next();

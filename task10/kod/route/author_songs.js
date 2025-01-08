@@ -33,8 +33,9 @@ router.delete(
     if (result) {
       ctx.status = 204;
     } else {
-      ctx.status = 404;
-      ctx.body = { error: "Relationship not found" };
+      const err = new Error("Relationship not found");
+      err.status = 404;
+      throw err;
     }
   }
 );

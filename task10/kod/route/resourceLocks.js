@@ -22,8 +22,9 @@ router.post(
       ctx.status = 201;
       ctx.body = { message: "Resource locked successfully" };
     } catch (error) {
-      ctx.status = 400;
-      ctx.body = { error: error.message };
+      const err = new Error(error.message);
+      err.status = 400;
+      throw err;
     }
   }
 );
@@ -46,8 +47,9 @@ router.delete(
       await resourceLocks.unlockResource(resource_type, resourceId, user_id);
       ctx.status = 204;
     } catch (error) {
-      ctx.status = 400;
-      ctx.body = { error: error.message };
+      const err = new Error(error.message);
+      err.status = 400;
+      throw err;
     }
   }
 );
