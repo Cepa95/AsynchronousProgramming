@@ -2,8 +2,9 @@ const { expect } = require("chai");
 const authorRepo = require("../repo/authors");
 const usersRepo = require("../repo/users");
 
-before(async function () {
+let token;
 
+before(async function () {
   await usersRepo.deleteByEmail("testuser@gmail.com");
 
   const testUser = await usersRepo.create({
@@ -16,9 +17,10 @@ before(async function () {
 describe("Author routes", function () {
   describe("GET /authors", function () {
     it("should fetch authors", async function () {
-      const resp = await global.api.get("/authors").expect(200);
-
-      //console.log("Response Body:", resp.body);
+      const resp = await global.api
+        .get("/authors")
+        .set("Authorization", `Bearer ${token}`)
+        .expect(200);
 
       expect(resp.body.length > 0).to.be.true;
       expect(Object.keys(resp.body[0])).to.deep.equal([
@@ -37,20 +39,15 @@ describe("Author routes", function () {
       const result = await authorRepo.create({
         name: authorName,
       });
-      //   console.log("aaaaaaaaaaaa");
-      //   console.log(result);
-      //   console.log("bbbbbbbbbbbbbbbbbbbb");
-      //    console.log(result[0]);
       createdAuthor = result[0];
-      //console.log("Created Author:", createdAuthor);
     });
 
     it("should fetch author by id", async function () {
       const resp = await global.api
         .get(`/authors/${createdAuthor.id}`)
+        .set("Authorization", `Bearer ${token}`)
         .expect(200);
 
-      //console.log("Response Body:", resp.body);
       expect(resp.body.name).to.be.equal(authorName);
     });
   });
@@ -65,8 +62,6 @@ describe("Author routes", function () {
           name: newName,
         })
         .expect(200);
-      // console.log("Response Body:", resp.body);
-      // console.log("Response Body:", resp.body[0].name);
 
       expect(resp.body.name).to.be.equal(newName);
     });
@@ -84,12 +79,14 @@ describe("Author routes", function () {
     });
 
     it("should delete an author by id", async function () {
-      await global.api.delete(`/authors/${createdAuthor.id}`)
-      .set("Authorization", `Bearer ${token}`)
-      .expect(204);
+      await global.api
+        .delete(`/authors/${createdAuthor.id}`)
+        .set("Authorization", `Bearer ${token}`)
+        .expect(204);
 
       const resp = await global.api
         .get(`/authors/${createdAuthor.id}`)
+        .set("Authorization", `Bearer ${token}`)
         .expect(404);
 
       expect(resp.body.error).to.be.equal("Author not found");
@@ -116,13 +113,12 @@ describe("Author routes", function () {
           name: updatedName,
         })
         .expect(200);
-      //   console.log("RESPONSE BODY");
-      //   console.log(resp.body);
 
       expect(resp.body.name).to.be.equal(updatedName);
 
       const getResp = await global.api
         .get(`/authors/${createdAuthor.id}`)
+        .set("Authorization", `Bearer ${token}`)
         .expect(200);
 
       expect(getResp.body.name).to.be.equal(updatedName);

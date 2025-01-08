@@ -2,8 +2,9 @@ const { expect } = require("chai");
 const songsRepo = require("../repo/songs");
 const usersRepo = require("../repo/users");
 
-before(async function () {
+let token;
 
+before(async function () {
   await usersRepo.deleteByEmail("testuser@gmail.com");
 
   const testUser = await usersRepo.create({
@@ -16,9 +17,10 @@ before(async function () {
 describe("Song routes", function () {
   describe("GET /songs", function () {
     it("should fetch songs", async function () {
-      const resp = await global.api.get("/songs").expect(200);
-
-      //console.log("Response Body:", resp.body);
+      const resp = await global.api
+        .get("/songs")
+        .set("Authorization", `Bearer ${token}`)
+        .expect(200);
 
       expect(resp.body.length > 0).to.be.true;
       expect(Object.keys(resp.body[0])).to.deep.equal([
@@ -38,31 +40,28 @@ describe("Song routes", function () {
         name: songTitle,
       });
       createdSong = result[0];
-      //console.log("Created Song:", createdSong);
     });
 
     it("should fetch song by id", async function () {
-      const resp = await global.api.get(`/songs/${createdSong.id}`).expect(200);
+      const resp = await global.api
+        .get(`/songs/${createdSong.id}`)
+        .set("Authorization", `Bearer ${token}`)
+        .expect(200);
 
-      //console.log("Response Body:", resp.body);
       expect(resp.body.name).to.be.equal(songTitle);
     });
   });
 
   describe("POST /songs", function () {
     it("should create a new song", async function () {
-      const newTitle = "newSong";
+      const newSong = { name: "newSong" };
       const resp = await global.api
         .post("/songs")
         .set("Authorization", `Bearer ${token}`)
-        .send({
-          name: newTitle,
-        })
+        .send(newSong)
         .expect(200);
 
-      //console.log("Response Body:", resp.body);
-
-      expect(resp.body.name).to.be.equal(newTitle);
+      expect(resp.body.name).to.be.equal(newSong.name);
     });
   });
 
@@ -83,7 +82,10 @@ describe("Song routes", function () {
         .set("Authorization", `Bearer ${token}`)
         .expect(204);
 
-      const resp = await global.api.get(`/songs/${createdSong.id}`).expect(404);
+      const resp = await global.api
+        .get(`/songs/${createdSong.id}`)
+        .set("Authorization", `Bearer ${token}`)
+        .expect(404);
 
       expect(resp.body.error).to.be.equal("Song not found");
     });
@@ -110,12 +112,11 @@ describe("Song routes", function () {
         })
         .expect(200);
 
-      //console.log("Response Body:", resp.body);
-
       expect(resp.body.name).to.be.equal(updatedTitle);
 
       const getResp = await global.api
         .get(`/songs/${createdSong.id}`)
+        .set("Authorization", `Bearer ${token}`)
         .expect(200);
 
       expect(getResp.body.name).to.be.equal(updatedTitle);
