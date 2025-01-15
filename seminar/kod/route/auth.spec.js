@@ -28,7 +28,7 @@ describe('Authorization Routes', () => {
       const response = await global.api.post('/register').send(mockUser);
 
       expect(response.status).to.equal(400);
-      expect(response.body.error).to.equal(
+      expect(response.body.message).to.equal(
         'User with this email already exists'
       );
     });
@@ -54,7 +54,7 @@ describe('Authorization Routes', () => {
       });
 
       expect(response.status).to.equal(401);
-      expect(response.body.error).to.equal('User not found');
+      expect(response.body.message).to.equal('User not found');
     });
 
     it('should return an error for invalid password', async () => {
@@ -66,7 +66,7 @@ describe('Authorization Routes', () => {
       const response = await global.api.post('/login').send(mockUser);
 
       expect(response.status).to.equal(401);
-      expect(response.body.error).to.equal('Invalid password');
+      expect(response.body.message).to.equal('Invalid password');
     });
   });
 

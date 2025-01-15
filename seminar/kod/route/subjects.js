@@ -41,9 +41,9 @@ router.put(
     const { name, ects } = ctx.request.body;
     const subject = await subjectRepo.getSubjectById(id);
     if (!subject) {
-      ctx.status = 404;
-      ctx.body = { message: "Subject not found" };
-      return;
+      const error = new Error("Subject not found");
+      error.status = 404;
+      throw error;
     }
     await subjectRepo.updateSubject(id, { name, ects });
     ctx.status = 200;

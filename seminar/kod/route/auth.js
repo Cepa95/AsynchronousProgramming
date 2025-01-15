@@ -17,8 +17,9 @@ router.post(
       const user = await authRepo.registerUser(ctx.request.body);
       ctx.body = user;
     } catch (err) {
-      ctx.status = 400;
-      ctx.body = { error: err.message };
+      const error = new Error(err.message);
+      error.status = 400;
+      throw error;
     }
   }
 );
@@ -37,9 +38,9 @@ router.post(
       const { user, token } = await authRepo.loginUser(email, password);
       ctx.body = { user, token };
     } catch (err) {
-      ctx.status = 401;
-      ctx.body = { error: err.message || "Invalid email or password" };
-      // ctx.body = { error: 'Invalid email or password' };
+      const error = new Error(err.message || "Invalid email or password");
+      error.status = 401;
+      throw error;
     }
   }
 );

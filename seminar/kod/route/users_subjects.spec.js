@@ -121,7 +121,7 @@ describe('User Subject Routes', () => {
         .set('Authorization', `Bearer ${mockUser.body.token}`);
 
       expect(response.status).to.equal(400);
-      expect(response.body.error).to.equal(
+      expect(response.body.message).to.equal(
         'User is already added to this subject'
       );
     });
@@ -154,7 +154,7 @@ describe('User Subject Routes', () => {
         .set('Authorization', `Bearer ${mockUser.body.token}`);
 
       expect(response.status).to.equal(400);
-      expect(response.body.error).to.equal('User is not added to this subject');
+      expect(response.body.message).to.equal('User is not added to this subject');
     });
 
     it('should return a Unauthorized error', async () => {

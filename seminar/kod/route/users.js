@@ -41,9 +41,9 @@ router.put(
     const { name, email } = ctx.request.body;
 
     if (parseInt(id) !== ctx.state.user.id) {
-      ctx.status = 403;
-      ctx.body = { message: "Forbidden: You can only update your own data" };
-      return;
+      const error = new Error("Forbidden: You can only update your own data");
+      error.status = 403;
+      throw error;
     }
 
     await usersRepo.updateUser(id, { name, email });
@@ -68,8 +68,9 @@ router.post(
       ctx.body = user;
       ctx.status = 201;
     } catch (err) {
-      ctx.status = 400;
-      ctx.body = { error: err.message };
+      const error = new Error(err.message);
+      error.status = 400;
+      throw error;
     }
   }
 );

@@ -19,8 +19,9 @@ router.get(
       const users = await usersSubjectsRepo.getUsersBySubjectId(id);
       ctx.body = users;
     } catch (err) {
-      ctx.status = 400;
-      ctx.body = { error: err.message };
+      const error = new Error(err.message);
+      error.status = 400;
+      throw error;
     }
   }
 );
@@ -34,16 +35,17 @@ router.get(
   async (ctx) => {
     const { id } = ctx.params;
     if (parseInt(id) !== ctx.state.user.id) {
-      ctx.status = 403;
-      ctx.body = { message: "Forbidden: You can only see your own data" };
-      return;
+      const error = new Error("Forbidden: You can only see your own data");
+      error.status = 403;
+      throw error;
     }
     try {
       const subjects = await usersSubjectsRepo.getSubjectsByUserId(id);
       ctx.body = subjects;
     } catch (err) {
-      ctx.status = 400;
-      ctx.body = { error: err.message };
+      const error = new Error(err.message);
+      error.status = 400;
+      throw error;
     }
   }
 );
@@ -63,8 +65,9 @@ router.post(
       ctx.status = 201;
       ctx.body = { message: "User added to subject successfully" };
     } catch (err) {
-      ctx.status = 400;
-      ctx.body = { error: err.message };
+      const error = new Error(err.message);
+      error.status = 400;
+      throw error;
     }
   }
 );
@@ -84,8 +87,9 @@ router.delete(
       ctx.status = 200;
       ctx.body = { message: "User removed from subject successfully" };
     } catch (err) {
-      ctx.status = 400;
-      ctx.body = { error: err.message };
+      const error = new Error(err.message);
+      error.status = 400;
+      throw error;
     }
   }
 );
