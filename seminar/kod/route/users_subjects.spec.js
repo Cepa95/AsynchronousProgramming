@@ -61,14 +61,14 @@ describe('User Subject Routes', () => {
         .set('Authorization', `Bearer ${student.body.token}`);
 
       expect(response.status).to.equal(403);
-      expect(response.body.error).to.equal('Admin access required');
+      expect(response.body.message).to.equal('Admin access required');
     });
 
     it('should return a Unauthorized error', async () => {
       const response = await global.api.get(`/subjects/${subject.id}/users`);
 
       expect(response.status).to.equal(401);
-      expect(response.body.error).to.equal('Authorization header missing');
+      expect(response.body.message).to.equal('Authorization header missing');
     });
   });
 
@@ -99,7 +99,7 @@ describe('User Subject Routes', () => {
       );
 
       expect(response.status).to.equal(401);
-      expect(response.body.error).to.equal('Authorization header missing');
+      expect(response.body.message).to.equal('Authorization header missing');
     });
   });
 
@@ -132,7 +132,7 @@ describe('User Subject Routes', () => {
       );
 
       expect(response.status).to.equal(401);
-      expect(response.body.error).to.equal('Authorization header missing');
+      expect(response.body.message).to.equal('Authorization header missing');
     });
   });
 
@@ -163,7 +163,7 @@ describe('User Subject Routes', () => {
       );
 
       expect(response.status).to.equal(401);
-      expect(response.body.error).to.equal('Authorization header missing');
+      expect(response.body.message).to.equal('Authorization header missing');
     });
   });
   after(async () => {

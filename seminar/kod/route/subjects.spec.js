@@ -125,7 +125,7 @@ describe('Subject Routes', () => {
         .send({ name: 'Mock Subject', ects: 4 });
 
       expect(response.status).to.equal(403);
-      expect(response.body.error).to.equal('Admin access required');
+      expect(response.body.message).to.equal('Admin access required');
     });
 
     it('should return a Unauthorized error', async () => {
@@ -145,7 +145,7 @@ describe('Subject Routes', () => {
         .send({ name: 'Mock Subject', ects: 4 });
 
       expect(response.status).to.equal(401);
-      expect(response.body.error).to.equal('Authorization header missing');
+      expect(response.body.message).to.equal('Authorization header missing');
     });
 
     it('should return a Subject not found error', async () => {
@@ -209,7 +209,7 @@ describe('Subject Routes', () => {
         .send({ name: 'Mock Subject', ects: 4 });
 
       expect(response.status).to.equal(403);
-      expect(response.body.error).to.equal('Admin access required');
+      expect(response.body.message).to.equal('Admin access required');
     });
 
     it('should return a Unauthorized error', async () => {
@@ -227,7 +227,7 @@ describe('Subject Routes', () => {
       const response = await global.api.delete(`/subjects/${subject.id}`);
 
       expect(response.status).to.equal(401);
-      expect(response.body.error).to.equal('Authorization header missing');
+      expect(response.body.message).to.equal('Authorization header missing');
     });
 
     after(async () => {

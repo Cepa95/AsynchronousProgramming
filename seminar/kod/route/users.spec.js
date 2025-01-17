@@ -33,14 +33,14 @@ describe('User Routes', () => {
         .set('Authorization', `Bearer ${student.body.token}`);
 
       expect(response.status).to.equal(403);
-      expect(response.body.error).to.equal('Admin access required');
+      expect(response.body.message).to.equal('Admin access required');
     });
 
     it('should return a Unauthorized error', async () => {
       const response = await global.api.get('/users');
 
       expect(response.status).to.equal(401);
-      expect(response.body.error).to.equal('Authorization header missing');
+      expect(response.body.message).to.equal('Authorization header missing');
     });
   });
 
@@ -69,14 +69,14 @@ describe('User Routes', () => {
         .send(mockUser);
 
       expect(response.status).to.equal(403);
-      expect(response.body.error).to.equal('Admin access required');
+      expect(response.body.message).to.equal('Admin access required');
     });
 
     it('should return a Unauthorized error', async () => {
       const response = await global.api.post('/users').send(mockUser);
 
       expect(response.status).to.equal(401);
-      expect(response.body.error).to.equal('Authorization header missing');
+      expect(response.body.message).to.equal('Authorization header missing');
     });
   });
 
@@ -139,7 +139,7 @@ describe('User Routes', () => {
         .send({ name: 'Mock', email: 'mock_user@example.com' });
 
       expect(response.status).to.equal(401);
-      expect(response.body.error).to.equal('Authorization header missing');
+      expect(response.body.message).to.equal('Authorization header missing');
     });
   });
 
@@ -201,7 +201,7 @@ describe('User Routes', () => {
         .set('Authorization', `Bearer ${student.body.token}`);
 
       expect(response.status).to.equal(403);
-      expect(response.body.error).to.equal('Admin access required');
+      expect(response.body.message).to.equal('Admin access required');
     });
 
     it('should return a Unauthorized error', async () => {
@@ -226,7 +226,7 @@ describe('User Routes', () => {
       const response = await global.api.delete(`/users/${user.id}`);
 
       expect(response.status).to.equal(401);
-      expect(response.body.error).to.equal('Authorization header missing');
+      expect(response.body.message).to.equal('Authorization header missing');
     });
   });
 
