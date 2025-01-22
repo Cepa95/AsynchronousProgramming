@@ -48,7 +48,7 @@ router.post(
 
     console.log("bcrypt compare ");
     console.log(user);
-    ctx.body = { user, token: usersRepo.jwtUserId(user.id) };
+    ctx.body = { id: user.id, token: usersRepo.jwtUserId(user.id) }
   }
 );
 
